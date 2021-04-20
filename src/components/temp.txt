@@ -1,0 +1,38 @@
+import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Landing } from "./Landing";
+import { AppWrapper } from "./AppWrapper";
+import { connect } from "react-redux";
+import {
+  Credential,
+  signInAction,
+  signUpAction,
+  signOutAction,
+  userSelector,
+  StateType,
+  User,
+} from "../../authentication";
+import { registerRootComponent } from "expo";
+
+
+
+Landing
+
+import React from "react";
+import { Button, Card } from "react-native-elements";
+import { View } from "react-native";
+import { Register } from "./Register";
+import { Login } from "./Login";
+import { LinearGradient } from "expo-linear-gradient";
+import { styles } from "../stylesheets/styles";
+
+
+
+Argument of type '(props: Props) => JSX.Element' is not assignable to parameter of type 'ComponentType<Matching<{ user: User; } & { dispatchSignIn: (credential: Credential) => SignInActionType; dispatchSignUp: (credential: Credential) => void; dispatchSignOut: () => void; }, Props>>'.
+  Type '(props: Props) => JSX.Element' is not assignable to type 'FunctionComponent<Matching<{ user: User; } & { dispatchSignIn: (credential: Credential) => SignInActionType; dispatchSignUp: (credential: Credential) => void; dispatchSignOut: () => void; }, Props>>'.
+    Types of parameters 'props' and 'props' are incompatible.
+      Type 'PropsWithChildren<Matching<{ user: User; } & { dispatchSignIn: (credential: Credential) => SignInActionType; dispatchSignUp: (credential: Credential) => void; dispatchSignOut: () => void; }, Props>>' is not assignable to type 'Props'.
+        Types of property 'dispatchSignIn' are incompatible.
+          Type '(credential: Credential) => SignInActionType' is not assignable to type '(credential: Credential) => void'.
+            Types of parameters 'credential' and 'credential' are incompatible.
+              Type 'Credential' is missing the following properties from type 'Credential': id, typets
