@@ -7,17 +7,22 @@ import { Login } from "./Login";
 import { useAppSelector } from "../../app/hooks";
 import { selectLoggedInUser } from "./userSlice";
 import { ActivityIndicator } from "react-native";
+import { useAppDispatch } from "../../app/hooks";
+import { signOut } from "./userSlice";
 
 export function Authentication() {
+  const dispatch = useAppDispatch();
   const [isSignInActive, setIsSignActive] = useState<boolean>(true);
   const user = useAppSelector(selectLoggedInUser);
 
   const onSignInPressed = () => {
     setIsSignActive(true);
+    dispatch(signOut());
   };
 
   const onSignUpPressed = () => {
     setIsSignActive(false);
+    dispatch(signOut());
   };
 
   const styles = StyleSheet.create({

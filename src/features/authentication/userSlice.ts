@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { isCatchClause } from "typescript";
 import { RootState } from "../../app/store";
-import { signUpUser } from "./authAPI";
-import { User, Credential } from "./entities";
+import { signInUser, signUpUser, resetPassword } from "./authAPI";
+import { User, Credential, Email } from "./entities";
 
 export interface UserState {
   user: User | null;
@@ -14,6 +15,39 @@ const initialState: UserState = {
   status: "idle",
   message: null,
 };
+
+export interface SignInArgs {
+  email: string;
+  password: string;
+}
+
+export const resetPasswordAsync = createAsyncThunk(
+  "user/reset",
+  async (email: string, { rejectWithValue }) => {
+    try {
+      const message = await resetPassword(new Email(email));
+      return message;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const SignInAsync = createAsyncThunk(
+  "user/signIn",
+  async ({ email, password }: SignInArgs, { rejectWithValue }) => {
+    try {
+      const credential = new Credential(email, password);
+      const response = await signInUser(credential).catch((error) => {
+        return rejectWithValue(error.message);
+      });
+      return response;
+    } catch (error) {
+      console.log("error handled");
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export interface SignUpArgs {
   firstName: string;
@@ -55,6 +89,9 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(SignInAsync.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(signUpAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -63,10 +100,28 @@ const userSlice = createSlice({
         state.user = action.payload;
         state.message = null;
       })
+      .addCase(SignInAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.user = action.payload;
+        state.message = null;
+      })
       .addCase(signUpAsync.rejected, (state, action) => {
         state.status = "failed";
         state.message = action.payload as string;
+        console.log(action.payload as string);
         state.user = null;
+      })
+      .addCase(SignInAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.message = action.payload as string;
+        console.log(action.payload as string);
+        state.user = null;
+      })
+      .addCase(resetPasswordAsync.rejected, (state, action) => {
+        state.message = action.payload as string;
+      })
+      .addCase(resetPasswordAsync.fulfilled, (state, action) => {
+        state.message = action.payload as string;
       });
   },
 });
