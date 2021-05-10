@@ -1,4 +1,4 @@
-import { Email } from "./email";
+import { Email } from "./Email";
 
 export class User {
   _firstName: string;
@@ -9,7 +9,6 @@ export class User {
     if (isEmptyOrNull(firstName) || isEmptyOrNull(lastName)) {
       throw new Error("You must fill first name and last name");
     }
-
     this._email = new Email(email);
     this._firstName = firstName.toLocaleLowerCase();
     this._lastName = lastName.toLocaleLowerCase();

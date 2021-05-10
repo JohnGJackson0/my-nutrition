@@ -1,20 +1,33 @@
 import * as React from "react";
 import { Provider } from "react-redux";
-import { configureStore } from "../core/lib/authentication";
-import AppModel from "./components/AppPresenter";
+import { store } from "./app/store";
+import App from "./App";
 import { registerRootComponent } from "expo";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
 
-class App extends React.Component {
+class AppWrapper extends React.Component {
   render() {
     return (
       <SafeAreaProvider>
-        <Provider store={configureStore()}>
-          <AppModel />
-        </Provider>
+        <SafeAreaView style={styles.container}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </SafeAreaView>
       </SafeAreaProvider>
     );
   }
 }
 
-registerRootComponent(App);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+});
+
+
+registerRootComponent(AppWrapper);
