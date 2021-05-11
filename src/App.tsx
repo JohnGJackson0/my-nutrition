@@ -1,14 +1,37 @@
 import React from "react";
 import { View } from "react-native";
 import { Authentication } from "./features/authentication/Authentication";
-import { User } from "./features/authentication/User"
+import { ResetPassword } from "./features/authentication/ResetPassword/ResetPassword";
+import { User } from "./features/authentication/User";
 import { StyleSheet } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+
+const Stack = createStackNavigator();
 
 function App() {
   return (
     <View style={styles.container}>
-      <User></User>
-      <Authentication></Authentication>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="authentication">
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="authentication"
+            component={Authentication}
+          ></Stack.Screen>
+          <Stack.Screen name="user" component={User}></Stack.Screen>
+          <Stack.Screen
+            name="ResetPassword"
+            options={{
+              headerStyle: {
+                backgroundColor: "#003f5c",
+              },
+              headerTintColor: "white",
+            }}
+            component={ResetPassword}
+          ></Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 }
@@ -16,7 +39,6 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
   },
 });
 

@@ -2,15 +2,13 @@ import { SnapshotViewIOSComponent } from "react-native";
 import { User, Credential, Email } from "./entities";
 import { db } from "./firebaseConfig";
 
-export async function resetPassword(email: Email): Promise<string> {
+export async function resetPassword(email: Email): Promise<String> {
   return new Promise((resolve, reject) => {
     db.app
       .auth()
       .sendPasswordResetEmail(email.address)
       .then(() => {
-        resolve(
-          "Please check your a password reset email sent to: " + email.address
-        );
+        resolve("A password reset email is sent to: " + email.address);
       })
       .catch((error) => {
         reject(error);

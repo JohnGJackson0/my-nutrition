@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { isCatchClause } from "typescript";
+import { RefreshControlBase } from "react-native";
+import { isCatchClause, isObjectLiteralElementLike } from "typescript";
 import { RootState } from "../../app/store";
 import { signInUser, signUpUser, resetPassword } from "./authAPI";
 import { User, Credential, Email } from "./entities";
@@ -21,18 +22,6 @@ export interface SignInArgs {
   password: string;
 }
 
-export const resetPasswordAsync = createAsyncThunk(
-  "user/reset",
-  async (email: string, { rejectWithValue }) => {
-    try {
-      const message = await resetPassword(new Email(email));
-      return message;
-    } catch (error) {
-      rejectWithValue(error);
-    }
-  }
-);
-
 export const SignInAsync = createAsyncThunk(
   "user/signIn",
   async ({ email, password }: SignInArgs, { rejectWithValue }) => {
@@ -48,7 +37,6 @@ export const SignInAsync = createAsyncThunk(
     }
   }
 );
-
 export interface SignUpArgs {
   firstName: string;
   lastName: string;
@@ -117,12 +105,6 @@ const userSlice = createSlice({
         console.log(action.payload as string);
         state.user = null;
       })
-      .addCase(resetPasswordAsync.rejected, (state, action) => {
-        state.message = action.payload as string;
-      })
-      .addCase(resetPasswordAsync.fulfilled, (state, action) => {
-        state.message = action.payload as string;
-      });
   },
 });
 

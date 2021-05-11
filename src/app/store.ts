@@ -1,10 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import userReducer from "../features/authentication/userSlice";
-import { getDefaultMiddleware } from "@reduxjs/toolkit";
+import passwordResetReducer from "../features/authentication/ResetPassword/PasswordResetSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    passwordReset: passwordResetReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

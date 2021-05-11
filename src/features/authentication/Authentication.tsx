@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card } from "react-native-elements";
+import { Button } from "react-native-elements";
 import { View, StyleSheet, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Register } from "./Register";
@@ -10,7 +10,7 @@ import { ActivityIndicator } from "react-native";
 import { useAppDispatch } from "../../app/hooks";
 import { signOut } from "./userSlice";
 
-export function Authentication() {
+export function Authentication({ navigation }) {
   const dispatch = useAppDispatch();
   const [isSignInActive, setIsSignActive] = useState<boolean>(true);
   const user = useAppSelector(selectLoggedInUser);
@@ -29,10 +29,15 @@ export function Authentication() {
     container: {
       flex: 1,
       justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#003f5c",
     },
     loginSelectionContainer: {
-      justifyContent: "center",
       flexDirection: "row",
+      marginBottom: 20,
+    },
+    loginContainer: {
+      width: "80%",
     },
     loadingIndicator: {
       justifyContent: "center",
@@ -44,27 +49,21 @@ export function Authentication() {
       bottom: 0,
       zIndex: 100,
     },
-    background: {
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: 0,
-      height: "100%",
-      zindex: 99,
-    },
     inactiveButton: {
       color: "#A9A9A9",
     },
     activeButton: {
       color: "#FFFFFF",
     },
+    logo: {
+      fontWeight: "bold",
+      fontSize: 50,
+      color: "#fb5b5a",
+      marginBottom: 20,
+    },
   });
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.background}
-        colors={["#23074D", "#CC5333"]}
-      />
       {user.status == "loading" ? (
         <View style={styles.loadingIndicator}>
           <ActivityIndicator color={"#000000"} size="large" />
@@ -72,6 +71,7 @@ export function Authentication() {
       ) : (
         <View></View>
       )}
+      <Text style={styles.logo}>My Nutrition</Text>
       <View style={styles.loginSelectionContainer}>
         <Button
           title="Register"
@@ -90,9 +90,11 @@ export function Authentication() {
           onPress={onSignInPressed}
         ></Button>
       </View>
-      <View>
-        <Card>{<View>{isSignInActive ? <Login /> : <Register />}</View>}</Card>
-      </View>
+      {
+        <View style={styles.loginContainer}>
+          {isSignInActive ? <Login navigation={navigation} /> : <Register />}
+        </View>
+      }
     </View>
   );
 }
