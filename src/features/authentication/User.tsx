@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedInUser, signOut } from "./userSlice";
 import { Button, Input } from "react-native-elements";
 import { Text, View } from "react-native";
-import { useAppDispatch } from "../../app/hooks";
 
 export function User() {
-  const user = useAppSelector(selectLoggedInUser);
-  const dispatch = useAppDispatch();
+  const user = useSelector(selectLoggedInUser);
+  const dispatch = useDispatch();
 
   const handleSignOut = () => {
     dispatch(signOut());
   };
-
   return user.user ? (
     <View>
       <Text>email: {user.user.email}</Text>

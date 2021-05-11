@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { SignInAsync } from "./userSlice";
 import { selectLoggedInUser } from "./userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export function Login({ navigation }) {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const user = useAppSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUser);
 
   const onSubmit = () => {
     dispatch(SignInAsync({ email, password }));
@@ -24,11 +24,6 @@ export function Login({ navigation }) {
   };
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
     loginButton: {
       backgroundColor: "#fb5b5a",
       borderRadius: 25,
@@ -43,9 +38,6 @@ export function Login({ navigation }) {
       borderRadius: 25,
       margin: 5,
       height: 40,
-      justifyContent: "center",
-      padding: 5,
-      paddingTop: 13,
       width: "100%",
     },
     inputViewOld: {
@@ -76,7 +68,7 @@ export function Login({ navigation }) {
   });
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.inputView}>
         <Input
           placeholder="Email"

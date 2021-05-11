@@ -13,7 +13,7 @@ function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="authentication">
+        <Stack.Navigator initialRouteName="Authentication">
           <Stack.Screen
             options={{ headerShown: false }}
             name="authentication"

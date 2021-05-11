@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useAppDispatch } from "../../app/hooks";
 import { signUpAsync } from "./userSlice";
-import { useAppSelector } from "../../app/hooks";
 import { selectLoggedInUser } from "./userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export function Register() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const user = useAppSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUser);
 
   const handleSubmit = () => {
     dispatch(signUpAsync({ firstName, lastName, email, password }));
@@ -50,9 +49,6 @@ export function Register() {
       borderRadius: 25,
       margin: 5,
       height: 40,
-      justifyContent: "center",
-      padding: 5,
-      paddingTop: 13,
       width: "100%",
     },
     inputText: {

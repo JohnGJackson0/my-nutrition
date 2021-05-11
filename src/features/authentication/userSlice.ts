@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RefreshControlBase } from "react-native";
-import { isCatchClause, isObjectLiteralElementLike } from "typescript";
-import { RootState } from "../../app/store";
-import { signInUser, signUpUser, resetPassword } from "./authAPI";
-import { User, Credential, Email } from "./entities";
+import { signInUser, signUpUser } from "./authAPI";
+import { User, Credential } from "./entities";
 
 export interface UserState {
   user: User | null;
@@ -64,7 +61,7 @@ export const signUpAsync = createAsyncThunk(
   }
 );
 
-export const selectLoggedInUser = (state: RootState) => state.user;
+export const selectLoggedInUser = (state) => state.user;
 
 const userSlice = createSlice({
   name: "user",
@@ -104,7 +101,7 @@ const userSlice = createSlice({
         state.message = action.payload as string;
         console.log(action.payload as string);
         state.user = null;
-      })
+      });
   },
 });
 

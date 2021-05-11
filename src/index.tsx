@@ -6,6 +6,10 @@ import { registerRootComponent } from "expo";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
+let persistor = persistStore(store);
 
 class AppWrapper extends React.Component {
   render() {
@@ -13,7 +17,9 @@ class AppWrapper extends React.Component {
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
           <Provider store={store}>
-            <App />
+            <PersistGate loading={null} persistor={persistor}>
+              <App />
+            </PersistGate>
           </Provider>
         </SafeAreaView>
       </SafeAreaProvider>

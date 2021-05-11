@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useAppSelector, useAppDispatch } from "../../../app/hooks";
+import { useSelector, useDispatch } from "react-redux";
 import {
   resetPasswordAsync,
   selectPasswordResetMessage,
@@ -10,8 +10,8 @@ import {
 
 export function ResetPassword() {
   const [email, setEmail] = useState("");
-  const dispatch = useAppDispatch();
-  const passwordReset = useAppSelector(selectPasswordResetMessage);
+  const dispatch = useDispatch();
+  const passwordReset = useSelector(selectPasswordResetMessage);
 
   const handleChangeEmail = (email: string) => {
     setEmail(email);
@@ -43,9 +43,6 @@ export function ResetPassword() {
       borderRadius: 25,
       margin: 5,
       height: 40,
-      justifyContent: "center",
-      padding: 5,
-      paddingTop: 13,
       width: "100%",
     },
     inputText: {

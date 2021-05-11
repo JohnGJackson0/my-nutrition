@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "src/app/store";
 import { resetPassword } from "../authAPI";
-import { Email } from "../entities";
 
 export interface PasswordResetState {
   passwordResetMessage: String | null;
@@ -15,7 +13,7 @@ export const resetPasswordAsync = createAsyncThunk(
   "passwordReset/reset",
   async (email: string, { rejectWithValue }) => {
     try {
-      const message = await resetPassword(new Email(email));
+      const message = await resetPassword(email);
       console.log("make fulfilled ", message);
       return message;
     } catch (error) {
@@ -25,8 +23,7 @@ export const resetPasswordAsync = createAsyncThunk(
   }
 );
 
-export const selectPasswordResetMessage = (state: RootState) =>
-  state.passwordReset;
+export const selectPasswordResetMessage = (state) => state.passwordReset;
 
 const PasswordResetSlice = createSlice({
   name: "passwordReset",

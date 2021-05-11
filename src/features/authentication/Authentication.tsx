@@ -1,40 +1,37 @@
 import React, { useState } from "react";
 import { Button } from "react-native-elements";
 import { View, StyleSheet, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { Register } from "./Register";
 import { Login } from "./Login";
-import { useAppSelector } from "../../app/hooks";
 import { selectLoggedInUser } from "./userSlice";
 import { ActivityIndicator } from "react-native";
-import { useAppDispatch } from "../../app/hooks";
-import { signOut } from "./userSlice";
+import { User } from "./User";
+import { useSelector, useDispatch } from "react-redux";
 
 export function Authentication({ navigation }) {
-  const dispatch = useAppDispatch();
   const [isSignInActive, setIsSignActive] = useState<boolean>(true);
-  const user = useAppSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUser);
 
   const onSignInPressed = () => {
     setIsSignActive(true);
-    dispatch(signOut());
+    //dispatch(signOut());
   };
 
   const onSignUpPressed = () => {
     setIsSignActive(false);
-    dispatch(signOut());
+    //dispatch(signOut());
   };
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
       alignItems: "center",
       backgroundColor: "#003f5c",
     },
     loginSelectionContainer: {
       flexDirection: "row",
       marginBottom: 20,
+      marginTop: "5%",
     },
     loginContainer: {
       width: "80%",
@@ -59,7 +56,7 @@ export function Authentication({ navigation }) {
       fontWeight: "bold",
       fontSize: 50,
       color: "#fb5b5a",
-      marginBottom: 20,
+      marginTop: "20%",
     },
   });
   return (

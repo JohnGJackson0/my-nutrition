@@ -1,7 +1,5 @@
-import { Email } from "./Email";
-
 export class Credential {
-  _email: Email;
+  _email: string;
   _password: string;
 
   constructor(email: string, password: string) {
@@ -10,11 +8,17 @@ export class Credential {
     }
 
     this._password = password;
-    this._email = new Email(email);
+    this._email = email;
+
+    if (isInvalidAddress(email)) {
+      throw new Error("Invalid email address: " + email);
+    } else {
+      this._email = email.toLowerCase();
+    }
   }
 
   get email(): string {
-    return this._email.address;
+    return this._email;
   }
 
   get password(): string {
@@ -25,4 +29,9 @@ export class Credential {
 function isInvalid(password: string) {
   const passwordRegex = /^[a-zA-Z0-9_.-]*$/;
   return !passwordRegex.test(password);
+}
+
+function isInvalidAddress(address: string) {
+  const validEmailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return !validEmailRegex.test(address);
 }
