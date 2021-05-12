@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
@@ -11,6 +11,12 @@ export function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const user = useSelector(selectLoggedInUser);
+
+  useEffect(() => {
+    if (user.user) {
+      navigation.navigate("Home");
+    }
+  }, [user]);
 
   const onSubmit = () => {
     dispatch(SignInAsync({ email, password }));

@@ -89,7 +89,11 @@ export function Authentication({ navigation }) {
       </View>
       {
         <View style={styles.loginContainer}>
-          {isSignInActive ? <Login navigation={navigation} /> : <Register />}
+          {isSignInActive ? (
+            <Login navigation={navigation} />
+          ) : (
+            <Register navigation={navigation} />
+          )}
         </View>
       }
     </View>

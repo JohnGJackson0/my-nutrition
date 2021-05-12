@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -6,13 +6,19 @@ import { signUpAsync } from "./userSlice";
 import { selectLoggedInUser } from "./userSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-export function Register() {
+export function Register({ navigation }) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const user = useSelector(selectLoggedInUser);
+
+  useEffect(() => {
+    if (user.user) {
+      navigation.navigate("Home");
+    }
+  }, [user]);
 
   const handleSubmit = () => {
     dispatch(signUpAsync({ firstName, lastName, email, password }));
