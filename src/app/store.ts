@@ -4,10 +4,18 @@ import passwordResetReducer from "../features/authentication/ResetPassword/Passw
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import measurementSystemReducer from "../features/userSurvey/questions/MeasuringSystemSlice";
+import userInfoMetricReducer from "../features/userSurvey/questions/UserInfoInMetricSlice";
+import userInfoUsReducer from "../features/userSurvey/questions/UserInfoInUSSlice";
+import userInfoReducer from "../features/userSurvey/questions/UserInfoSlice";
 
 const reducers = combineReducers({
   user: userReducer,
   passwordReset: passwordResetReducer,
+  measurementSystem: measurementSystemReducer,
+  userInfoMetric: userInfoMetricReducer,
+  userInfoUS: userInfoUsReducer,
+  userInfo: userInfoReducer,
 });
 
 const persistConfig = {

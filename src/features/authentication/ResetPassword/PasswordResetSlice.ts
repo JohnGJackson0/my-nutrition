@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { resetPassword } from "../authAPI";
-
 export interface PasswordResetState {
   passwordResetMessage: String | null;
 }
@@ -14,10 +13,8 @@ export const resetPasswordAsync = createAsyncThunk(
   async (email: string, { rejectWithValue }) => {
     try {
       const message = await resetPassword(email);
-      console.log("make fulfilled ", message);
       return message;
     } catch (error) {
-      console.log("make error ", error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -32,11 +29,9 @@ const PasswordResetSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(resetPasswordAsync.rejected, (state, action) => {
-        console.log("error 3 ", action.payload as string);
         state.passwordResetMessage = action.payload as string;
       })
       .addCase(resetPasswordAsync.fulfilled, (state, action) => {
-        console.log("fulfilled called ", action.payload as string);
         state.passwordResetMessage = action.payload as string;
       });
   },

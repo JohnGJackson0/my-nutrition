@@ -5,8 +5,7 @@ import { Register } from "./Register";
 import { Login } from "./Login";
 import { selectLoggedInUser } from "./userSlice";
 import { ActivityIndicator } from "react-native";
-import { User } from "./User";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export function Authentication({ navigation }) {
   const [isSignInActive, setIsSignActive] = useState<boolean>(true);
