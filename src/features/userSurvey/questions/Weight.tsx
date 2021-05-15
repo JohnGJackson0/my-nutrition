@@ -3,20 +3,20 @@ import { Theme } from "../../../Theme";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectIsUSAMeasurement } from "./MeasuringSystemSlice";
-import { updateWeightMetric } from "./UserInfoInMetricSlice";
-import { updateWeightUS } from "./UserInfoInUSSlice";
+import { updateWeightKm } from "./UserInfoInMetricSlice";
+import { updateWeightLb } from "./UserInfoInUSSlice";
 
 export function Weight() {
-  const [weightKG, setWeightKG] = useState("");
-  const [weightLB, setWeightLB] = useState("");
+  const [weightKg, setWeightKg] = useState("");
+  const [weightLb, setWeightLb] = useState("");
   const dispatch = useDispatch();
   const isMeasurementUSA = useSelector(selectIsUSAMeasurement);
 
   useEffect(() => {
-    dispatch(updateWeightMetric(null));
-    setWeightKG("");
-    dispatch(updateWeightUS(null));
-    setWeightLB("");
+    dispatch(updateWeightKm(null));
+    setWeightKg("");
+    dispatch(updateWeightLb(null));
+    setWeightLb("");
   }, [isMeasurementUSA]);
 
   const styles = StyleSheet.create({
@@ -25,14 +25,14 @@ export function Weight() {
     },
   });
 
-  const handleWeightKG = (weightKGInput: string) => {
-    setWeightKG(weightKGInput);
-    dispatch(updateWeightMetric(weightKGInput));
+  const handleWeightKg = (weightKGInput: string) => {
+    setWeightKg(weightKGInput);
+    dispatch(updateWeightKm(weightKGInput));
   };
 
-  const handleWeightLB = (weightLBInput: string) => {
-    setWeightLB(weightLBInput);
-    dispatch(updateWeightUS(weightLBInput));
+  const handleWeightLb = (weightLBInput: string) => {
+    setWeightLb(weightLBInput);
+    dispatch(updateWeightLb(weightLBInput));
   };
 
   return (
@@ -41,21 +41,21 @@ export function Weight() {
       {isMeasurementUSA ? (
         <View>
           <Theme.themedInput
-            placeholder="lb"
+            placeholder="enter your weight in pounds"
             keyboardType="number-pad"
             numeric
-            value={weightLB}
-            onChangeText={(value: string) => handleWeightLB(value)}
+            value={weightLb}
+            onChangeText={(value: string) => handleWeightLb(value)}
           ></Theme.themedInput>
         </View>
       ) : (
         <View>
           <Theme.themedInput
-            placeholder="kg"
+            placeholder="enter your weight in kilo"
             keyboardType="number-pad"
             numeric
-            value={weightKG}
-            onChangeText={(value: string) => handleWeightKG(value)}
+            value={weightKg}
+            onChangeText={(value: string) => handleWeightKg(value)}
           ></Theme.themedInput>
         </View>
       )}

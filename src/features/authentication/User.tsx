@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedInUser, signOut } from "./userSlice";
 import { Button, Input } from "react-native-elements";
 import { Text, View } from "react-native";
+import { selectUserInfo } from "../userSurvey/questions/UserInfoSlice";
+import { Theme } from "../../Theme";
+import { getGoalAsync } from "../userSurvey/questions/UserInfoSlice";
 
 export function User() {
   const user = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getGoalAsync);
+  }, []);
+
+  const userInfo = useSelector(selectUserInfo);
 
   const handleSignOut = () => {
     dispatch(signOut());
@@ -19,6 +28,22 @@ export function User() {
       </Text>
       <Text>status: {user.status}</Text>
       <Text>message: {user.message}</Text>
+
+      {userInfo.calorieGoalError != "" ? (
+        <View>
+          <Theme.themedErrorText>
+            There was an issue with your most recent calorie submission.
+          </Theme.themedErrorText>
+          <Theme.themedErrorText>
+            {userInfo.calorieGoalError}
+          </Theme.themedErrorText>
+        </View>
+      ) : (
+        <View>
+          <Text>goal: {userInfo.calorieGoal}</Text>
+        </View>
+      )}
+
       <Button title="Sign out" type="solid" onPress={handleSignOut} />
     </View>
   ) : (

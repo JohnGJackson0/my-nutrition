@@ -68,6 +68,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     signOut: (state) => {
+      //TODO: Sign out of firebase
       state.user = null;
       state.message = null;
     },

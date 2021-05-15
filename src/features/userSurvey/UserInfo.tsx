@@ -5,6 +5,7 @@ import { Weight } from "./questions/weight";
 import { Age } from "./questions/age";
 import { Height } from "./questions/Height";
 import { MesuringSystem } from "./questions/MesuringSystem";
+import { ActivityLevel } from "./questions/ActivityLevel";
 
 export function UserInfo() {
   return (
@@ -14,6 +15,7 @@ export function UserInfo() {
       <Age></Age>
       <Height></Height>
       <Weight></Weight>
+      <ActivityLevel></ActivityLevel>
     </View>
   );
 }

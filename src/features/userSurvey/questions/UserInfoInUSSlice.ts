@@ -23,7 +23,7 @@ const userInfoMetricSlice = createSlice({
   name: "userInfoUS",
   initialState,
   reducers: {
-    updateWeightUS: (state, action) => {
+    updateWeightLb: (state, action) => {
       if (
         _isWholeNumber(action.payload) &&
         _isValidWeight(parseInt(action.payload))
@@ -37,7 +37,7 @@ const userInfoMetricSlice = createSlice({
 
       state.weightInLb = action.payload;
     },
-    updateHeightFT: (state, action) => {
+    updateHeightFt: (state, action) => {
       //action.payload should be a string from the user input, unvalidated
       if (
         _isWholeNumber(action.payload) &&
@@ -51,7 +51,7 @@ const userInfoMetricSlice = createSlice({
 
       state.heightInFt = action.payload;
     },
-    updateHeightIN: (state, action) => {
+    updateHeightIn: (state, action) => {
       //action.payload should be a string from the user input, unvalidated
       if (
         _isWholeNumber(action.payload) &&
@@ -78,11 +78,13 @@ function _isValidFeet(n: number): boolean {
 function _isValidInch(n: number): boolean {
   return n >= 0 && n <= 12;
 }
+
+//TODO: fix letters ' ex is accepted
 function _isWholeNumber(n: string): boolean {
   return !isNaN(parseInt(n)) && Number.isInteger(parseFloat(n));
 }
 
-export const { updateWeightUS, updateHeightFT, updateHeightIN } =
+export const { updateWeightLb, updateHeightFt, updateHeightIn } =
   userInfoMetricSlice.actions;
 
 export const selectUserInfoUS = (state) => state.userInfoUS;

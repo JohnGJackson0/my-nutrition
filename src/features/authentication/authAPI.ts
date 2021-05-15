@@ -1,4 +1,3 @@
-import { SnapshotViewIOSComponent } from "react-native";
 import { User, Credential } from "./entities";
 import { db } from "./firebaseConfig";
 

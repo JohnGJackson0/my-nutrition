@@ -30,7 +30,7 @@ export function Age() {
     <View style={styles.container}>
       <Theme.themedText>Age</Theme.themedText>
       <Theme.themedInput
-        placeholder="age"
+        placeholder="enter your age"
         keyboardType="number-pad"
         numeric
         value={age}

@@ -9,6 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Splash } from "./features/splash/Splash";
 import { Home } from "./features/home/Home";
 import { Survey } from "./features/userSurvey/Survey";
+import { CalorieGoal } from "./features/userSurvey/goals/calorieGoal/CalorieGoal";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,11 @@ function App() {
             options={{ headerShown: false }}
             name="Authentication"
             component={Authentication}
+          ></Stack.Screen>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CalorieGoal"
+            component={CalorieGoal}
           ></Stack.Screen>
           <Stack.Screen
             options={{ headerShown: false }}

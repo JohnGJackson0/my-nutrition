@@ -3,23 +3,23 @@ import { createSlice } from "@reduxjs/toolkit";
 //note mesurement is stored in a different slice
 export interface UserInfoMetricState {
   weightInKg: number;
-  heightInCM: number;
+  heightInCm: number;
   weightError: string;
-  heightInCMError: string;
+  heightInCmError: string;
 }
 
 const initialState: UserInfoMetricState = {
   weightInKg: null,
-  heightInCM: null,
+  heightInCm: null,
   weightError: "",
-  heightInCMError: "",
+  heightInCmError: "",
 };
 
 const userInfoMetricSlice = createSlice({
   name: "userInfoMetric",
   initialState,
   reducers: {
-    updateWeightMetric: (state, action) => {
+    updateWeightKm: (state, action) => {
       if (
         _isWholeNumber(action.payload) &&
         _isValidWeight(parseInt(action.payload))
@@ -33,19 +33,20 @@ const userInfoMetricSlice = createSlice({
 
       state.weightInKg = action.payload;
     },
-    updateHeightMetric: (state, action) => {
+    updateHeightCm: (state, action) => {
       //action.payload should be a string from the user input, unvalidated
       if (
         _isWholeNumber(action.payload) &&
         _isValidHeight(parseInt(action.payload))
       ) {
-        state.heightInCM = parseInt(action.payload);
-        state.heightInCMError = "";
+        console.log("passed");
+        state.heightInCm = parseInt(action.payload);
+        state.heightInCmError = "";
       } else {
-        state.heightInCMError =
+        state.heightInCmError =
           "Please enter a whole number between 30 and 275 into the height field.";
       }
-      state.heightInCM = action.payload;
+      state.heightInCm = action.payload;
     },
   },
 });
@@ -58,12 +59,12 @@ function _isValidHeight(n: number): boolean {
   return n >= 30 && n <= 275;
 }
 
+//TODO: fix letters ' ex is accepted
 function _isWholeNumber(n: string): boolean {
   return !isNaN(parseInt(n)) && Number.isInteger(parseFloat(n));
 }
 
-export const { updateWeightMetric, updateHeightMetric } =
-  userInfoMetricSlice.actions;
+export const { updateWeightKm, updateHeightCm } = userInfoMetricSlice.actions;
 
 export const selectUserInfoMetric = (state) => state.userInfoMetric;
 

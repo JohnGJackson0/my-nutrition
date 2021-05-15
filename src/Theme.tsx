@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "white",
   },
+  themedCoolText: {
+    margin: 5,
+    fontSize: 30,
+    color: "#fb5b5a",
+  },
   inputView: {
     backgroundColor: "#465881",
     borderRadius: 25,
@@ -121,6 +126,10 @@ const themedText = (props) => {
   return <Text style={styles.themedText} {...props}></Text>;
 };
 
+const themedCoolText = (props) => {
+  return <Text style={styles.themedCoolText} {...props}></Text>;
+};
+
 const themedErrorText = (props) => {
   return <Text style={styles.errorText} {...props}></Text>;
 };
@@ -135,5 +144,6 @@ export const Theme = {
   themedText,
   themedBackgroundColor,
   inactiveButtonVariant,
-  themedErrorText
+  themedErrorText,
+  themedCoolText,
 };

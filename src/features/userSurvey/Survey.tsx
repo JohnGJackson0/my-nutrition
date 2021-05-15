@@ -13,6 +13,7 @@ export function Survey({ navigation }) {
   const isUSAMeasurement = useSelector(selectIsUSAMeasurement);
   const userInfo = useSelector(selectUserInfo);
   const userInfoUS = useSelector(selectUserInfoUS);
+  //TODO:
   const [displayError, setDisplayError] = useState(false);
   const [errorMessageUS, setErrorMessageUS] = useState("");
   const [errorMessageMetric, setErrorMessageMetric] = useState("");
@@ -41,26 +42,30 @@ export function Survey({ navigation }) {
         userInfoUS.heightErrorFt +
         "\n" +
         userInfo.ageError +
+        "\n" +
+        userInfo.weeklyActivityError +
         "\n";
       if (error.trim() != "") {
         setDisplayError(true);
         setErrorMessageUS(error);
       } else {
-        navigation.navigate("Home");
+        navigation.navigate("CalorieGoal");
       }
     } else {
       const error =
         userInfoMetric.weightError +
         "\n" +
-        userInfoMetric.heightInCMError +
+        userInfoMetric.heightInCmError +
         "\n" +
         userInfo.ageError +
+        "\n" +
+        userInfo.weeklyActivityError +
         "\n";
       if (error.trim() != "") {
         setDisplayError(true);
         setErrorMessageMetric(error);
       } else {
-        navigation.navigate("Home");
+        navigation.navigate("Goal");
       }
     }
   };

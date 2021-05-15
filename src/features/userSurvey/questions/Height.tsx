@@ -3,14 +3,14 @@ import { Theme } from "../../../Theme";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectIsUSAMeasurement } from "./MeasuringSystemSlice";
-import { updateHeightMetric } from "./UserInfoInMetricSlice";
-import { updateHeightFT, updateHeightIN } from "./UserInfoInUSSlice";
+import { updateHeightCm } from "./UserInfoInMetricSlice";
+import { updateHeightFt, updateHeightIn } from "./UserInfoInUSSlice";
 
 export function Height() {
   const dispatch = useDispatch();
-  const [heightCM, setHeightCM] = useState("");
-  const [heightFT, setHeightFT] = useState("");
-  const [heightIN, setHeightIN] = useState("");
+  const [heightCm, setHeightCm] = useState("");
+  const [heightFt, setHeightFt] = useState("");
+  const [heightIn, setHeightIn] = useState("");
   const isMeasurementUSA = useSelector(selectIsUSAMeasurement);
 
   const styles = StyleSheet.create({
@@ -20,26 +20,26 @@ export function Height() {
   });
 
   useEffect(() => {
-    dispatch(updateHeightMetric(null));
-    setHeightCM("");
-    dispatch(updateHeightFT(null));
-    setHeightFT("");
-    dispatch(updateHeightIN(null));
-    setHeightIN("");
+    dispatch(updateHeightCm(null));
+    setHeightCm("");
+    dispatch(updateHeightFt(null));
+    setHeightFt("");
+    dispatch(updateHeightIn(null));
+    setHeightIn("");
   }, [isMeasurementUSA]);
 
-  const handleHeightCM = (heightCMInput: string) => {
-    setHeightCM(heightCMInput);
-    dispatch(updateHeightMetric(heightCMInput));
+  const handleHeightCm = (heightCmInput: string) => {
+    setHeightCm(heightCmInput);
+    dispatch(updateHeightCm(heightCmInput));
   };
 
-  const handleHeightFT = (heightFTInput: string) => {
-    setHeightFT(heightFTInput);
-    dispatch(updateHeightFT(heightFTInput));
+  const handleHeightFt = (heightFtInput: string) => {
+    setHeightFt(heightFtInput);
+    dispatch(updateHeightFt(heightFtInput));
   };
-  const handleHeightIN = (heightINInput: string) => {
-    setHeightIN(heightINInput);
-    dispatch(updateHeightIN(heightINInput));
+  const handleHeightIn = (heightInInput: string) => {
+    setHeightIn(heightInInput);
+    dispatch(updateHeightIn(heightInInput));
   };
 
   return (
@@ -48,29 +48,29 @@ export function Height() {
         <View>
           <Theme.themedText>Height </Theme.themedText>
           <Theme.themedInput
-            placeholder="ft"
+            placeholder="enter your height in feet"
             keyboardType="number-pad"
             numeric
-            value={heightFT}
-            onChangeText={(value: string) => handleHeightFT(value)}
+            value={heightFt}
+            onChangeText={(value: string) => handleHeightFt(value)}
           ></Theme.themedInput>
           <Theme.themedInput
-            placeholder="in"
+            placeholder="enter inches"
             keyboardType="number-pad"
             numeric
-            value={heightIN}
-            onChangeText={(value: string) => handleHeightIN(value)}
+            value={heightIn}
+            onChangeText={(value: string) => handleHeightIn(value)}
           ></Theme.themedInput>
         </View>
       ) : (
         <View>
           <Theme.themedText>Height</Theme.themedText>
           <Theme.themedInput
-            placeholder="cm"
+            placeholder="enter your height in cm"
             keyboardType="number-pad"
             numeric
-            value={heightCM}
-            onChangeText={(value: string) => handleHeightCM(value)}
+            value={heightCm}
+            onChangeText={(value: string) => handleHeightCm(value)}
           ></Theme.themedInput>
         </View>
       )}
