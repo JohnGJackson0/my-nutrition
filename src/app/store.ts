@@ -8,6 +8,8 @@ import measurementSystemReducer from "../features/userSurvey/questions/Measuring
 import userInfoMetricReducer from "../features/userSurvey/questions/UserInfoInMetricSlice";
 import userInfoUsReducer from "../features/userSurvey/questions/UserInfoInUSSlice";
 import userInfoReducer from "../features/userSurvey/questions/UserInfoSlice";
+import foodsSearchReducer from "../features/addFoods/foodSearchSlice";
+import foodReducer from "../features/addFoods/foodSlice";
 
 const reducers = combineReducers({
   user: userReducer,
@@ -16,6 +18,8 @@ const reducers = combineReducers({
   userInfoMetric: userInfoMetricReducer,
   userInfoUS: userInfoUsReducer,
   userInfo: userInfoReducer,
+  foods: foodsSearchReducer,
+  food: foodReducer,
 });
 
 const persistConfig = {

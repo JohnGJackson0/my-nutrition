@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Input, Text } from "react-native-elements";
-import { StyleSheet, View } from "react-native";
+import { Button, Input, Text, Overlay } from "react-native-elements";
+import { Pressable, StyleSheet, View } from "react-native";
+import Modal from "modal-react-native-web";
 
 const styles = StyleSheet.create({
   themedButtonRounded: {
@@ -36,11 +37,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  themedButtonVariant: {
-    backgroundColor: "#fb5b5a",
+  themedClearButton: {
     height: 50,
+    margin: 5,
+    borderRadius: 25,
+    borderColor: "#fb5b5a",
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 0.8,
   },
   inactiveButtonTitle: {
     color: "black",
@@ -59,11 +63,40 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "stretch",
   },
+  modalContainer: {},
+  modal: {},
   errorText: {
     color: "red",
     fontSize: 20,
   },
 });
+
+//using overlay to help support web
+const themedModal = (props) => {
+  return (
+    <View>
+      {props.isVisible == true ? <_modal {...props}></_modal> : <View></View>}
+    </View>
+  );
+};
+
+const _modal = (props) => {
+  return (
+    <View style={styles.modalContainer}>
+      <Overlay
+        {...props}
+        ModalComponent={Modal}
+        transparent={true}
+        animationType="slide"
+      >
+        <Button title="X" style={{ zIndex: 0.5 }}></Button>
+        {props.children}
+      </Overlay>
+    </View>
+  );
+};
+
+
 
 //helps offset with other themed buttons
 const inactiveButtonVariant = (props) => {
@@ -88,12 +121,26 @@ const themedButtonRounded = (props) => {
   );
 };
 
+const themedPrimaryColor = "#fb5b5a";
+const themedBackgroundColor = "#003f5c";
+
 const themedButton = (props) => {
   return (
     <Button
       type="clear"
       titleStyle={{ color: "white" }}
       style={styles.themedButton}
+      {...props}
+    />
+  );
+};
+
+const themedClearButton = (props) => {
+  return (
+    <Button
+      type="clear"
+      titleStyle={{ color: "white" }}
+      style={styles.themedClearButton}
       {...props}
     />
   );
@@ -134,8 +181,6 @@ const themedErrorText = (props) => {
   return <Text style={styles.errorText} {...props}></Text>;
 };
 
-const themedBackgroundColor = "#003f5c";
-
 export const Theme = {
   themedButtonRounded,
   themedButton,
@@ -146,4 +191,7 @@ export const Theme = {
   inactiveButtonVariant,
   themedErrorText,
   themedCoolText,
+  themedPrimaryColor,
+  themedClearButton,
+  themedModal,
 };

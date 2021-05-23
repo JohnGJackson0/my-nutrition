@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedInUser, signOut } from "./userSlice";
 import { Button, Input } from "react-native-elements";
 import { Text, View } from "react-native";
-import { selectUserInfo } from "../userSurvey/questions/UserInfoSlice";
+import {
+  selectUserInfo,
+  getGoalAsync,
+} from "../userSurvey/questions/UserInfoSlice";
 import { Theme } from "../../Theme";
-import { getGoalAsync } from "../userSurvey/questions/UserInfoSlice";
 
 export function User() {
   const user = useSelector(selectLoggedInUser);

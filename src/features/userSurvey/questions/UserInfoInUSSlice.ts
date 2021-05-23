@@ -19,7 +19,7 @@ const initialState: UserInfoUSState = {
   heightErrorIn: "",
 };
 
-const userInfoMetricSlice = createSlice({
+const userInfoUSSlice = createSlice({
   name: "userInfoUS",
   initialState,
   reducers: {
@@ -85,8 +85,8 @@ function _isWholeNumber(n: string): boolean {
 }
 
 export const { updateWeightLb, updateHeightFt, updateHeightIn } =
-  userInfoMetricSlice.actions;
+  userInfoUSSlice.actions;
 
 export const selectUserInfoUS = (state) => state.userInfoUS;
 
-export default userInfoMetricSlice.reducer;
+export default userInfoUSSlice.reducer;

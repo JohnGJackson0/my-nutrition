@@ -10,47 +10,94 @@ import { Splash } from "./features/splash/Splash";
 import { Home } from "./features/home/Home";
 import { Survey } from "./features/userSurvey/Survey";
 import { CalorieGoal } from "./features/userSurvey/goals/calorieGoal/CalorieGoal";
+import { AddFood } from "./features/addFoods/AddFood";
+import { FoodModal } from "./features/addFoods/FoodModal";
 
-const Stack = createStackNavigator();
+const MainStack = createStackNavigator();
+const RootStack = createStackNavigator();
+
+function MainStackScreen() {
+  return (
+    <MainStack.Navigator initialRouteName="AddItem">
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="Authentication"
+        component={Authentication}
+      ></MainStack.Screen>
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="CalorieGoal"
+        component={CalorieGoal}
+      ></MainStack.Screen>
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="Survey"
+        component={Survey}
+      ></MainStack.Screen>
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="Splash"
+        component={Splash}
+      ></MainStack.Screen>
+      <MainStack.Screen name="User" component={User}></MainStack.Screen>
+      <MainStack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerStyle: {
+            backgroundColor: "#003f5c",
+          },
+          headerTintColor: "white",
+          headerLeft: () => null,
+        }}
+      ></MainStack.Screen>
+      <MainStack.Screen
+        name="AddItem"
+        component={AddFood}
+        options={{
+          headerStyle: {
+            backgroundColor: "#003f5c",
+          },
+          headerTintColor: "white",
+          headerLeft: () => null,
+        }}
+      ></MainStack.Screen>
+      <MainStack.Screen
+        name="ResetPassword"
+        options={{
+          headerStyle: {
+            backgroundColor: "#003f5c",
+          },
+          headerTintColor: "white",
+        }}
+        component={ResetPassword}
+      ></MainStack.Screen>
+    </MainStack.Navigator>
+  );
+}
+
+function RootStackScreen() {
+  return (
+    <RootStack.Navigator mode="modal">
+      <RootStack.Screen
+        name="Main"
+        component={MainStackScreen}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen
+        name="FoodModal"
+        component={FoodModal}
+        options={{ headerShown: false }}
+      />
+    </RootStack.Navigator>
+  );
+}
 
 function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Survey">
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Authentication"
-            component={Authentication}
-          ></Stack.Screen>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="CalorieGoal"
-            component={CalorieGoal}
-          ></Stack.Screen>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Survey"
-            component={Survey}
-          ></Stack.Screen>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Splash"
-            component={Splash}
-          ></Stack.Screen>
-          <Stack.Screen name="User" component={User}></Stack.Screen>
-          <Stack.Screen name="Home" component={Home}></Stack.Screen>
-          <Stack.Screen
-            name="ResetPassword"
-            options={{
-              headerStyle: {
-                backgroundColor: "#003f5c",
-              },
-              headerTintColor: "white",
-            }}
-            component={ResetPassword}
-          ></Stack.Screen>
-        </Stack.Navigator>
+        <RootStackScreen></RootStackScreen>
       </NavigationContainer>
     </View>
   );

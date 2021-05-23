@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Theme } from "src/Theme";
-import { User } from "../authentication/User";
 import {
   selectUserInfo,
   getGoalAsync,
 } from "../userSurvey/questions/UserInfoSlice";
+import { FAB } from "react-native-paper";
 
 export function Home({ navigation }) {
   const dispatch = useDispatch();
@@ -18,27 +18,21 @@ export function Home({ navigation }) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: "#003f5c",
+    },
+    fab: {
+      position: "absolute",
+      margin: 16,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "#fb5b5a",
     },
   });
 
+  //TODO: consumed/remaining fats/carbs/protiens calories
   return (
     <View style={styles.container}>
-      {userInfo.calorieGoalError != "" ? (
-        <View>
-          <Theme.themedErrorText>
-            There was an issue with your most recent calorie submission.
-          </Theme.themedErrorText>
-          <Theme.themedErrorText>
-            {userInfo.calorieGoalError}
-            {console.log(userInfo)}
-          </Theme.themedErrorText>
-        </View>
-      ) : (
-        <View>
-          <User></User>
-          <Text>Welcome to the home screen.</Text>
-        </View>
-      )}
+      <Theme.themedText>Welcome to the home screen. </Theme.themedText>
     </View>
   );
 }
