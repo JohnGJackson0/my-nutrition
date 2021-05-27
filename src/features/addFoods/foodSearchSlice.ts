@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { FoodList, getFoods, Food } from "./foodsAPI";
+import { getFoods, Food } from "./foodsAPI";
 
 export interface FoodsState {
-  food: FoodList;
+  food: Array<Food>;
   status: "idle" | "loading" | "failed";
 }
 

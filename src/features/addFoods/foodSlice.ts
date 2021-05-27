@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { FoodData, getFood } from "./foodsAPI";
+import { Food, FoodData, getFood } from "./foodsAPI";
 
 export interface FoodState {
   food: FoodData;
@@ -8,14 +8,14 @@ export interface FoodState {
 }
 
 const initialState: FoodState = {
-  food: null,
+  food: new FoodData(new Food("", ""), []),
   status: "idle",
   error: "",
 };
 
 export const setFoodAsync = createAsyncThunk(
   "food/getFood",
-  async (id: number, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const response = await getFood(id).catch((error) => {
         return rejectWithValue(error.message);

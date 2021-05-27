@@ -60,14 +60,14 @@ export function AddFood({ navigation }) {
   };
 
   const Item = ({ item }) => (
-    <Theme.themedClearButton
+    <Theme.themedItemButton
       title={item.foodName}
       onPress={() => {
         actionOnRow(item);
       }}
     >
       <Text>{item.title}</Text>
-    </Theme.themedClearButton>
+    </Theme.themedItemButton>
   );
 
   const renderItem = ({ item }) => {
@@ -89,7 +89,6 @@ export function AddFood({ navigation }) {
       ) : (
         <View></View>
       )}
-      {console.log("food obj ", foods)}
       <FlatList data={foods.food} renderItem={renderItem}></FlatList>
     </View>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Input, Text, Overlay } from "react-native-elements";
 import { Pressable, StyleSheet, View } from "react-native";
 import Modal from "modal-react-native-web";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const styles = StyleSheet.create({
   themedButtonRounded: {
@@ -36,12 +37,20 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 0.5,
   },
   themedClearButton: {
     height: 50,
-    margin: 5,
     borderRadius: 25,
     borderColor: "#fb5b5a",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 0.8,
+  },
+  themedItemButton: {
+    height: 50,
+    margin: 5,
+    borderColor: "white",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 0.8,
@@ -96,8 +105,6 @@ const _modal = (props) => {
   );
 };
 
-
-
 //helps offset with other themed buttons
 const inactiveButtonVariant = (props) => {
   return (
@@ -146,6 +153,17 @@ const themedClearButton = (props) => {
   );
 };
 
+const themedItemButton = (props) => {
+  return (
+    <Button
+      type="clear"
+      titleStyle={{ color: "white" }}
+      style={styles.themedItemButton}
+      {...props}
+    />
+  );
+};
+
 const inactiveButton = (props) => {
   return (
     <Button
@@ -162,6 +180,35 @@ const themedInput = (props) => {
     <View style={styles.inputView}>
       <Input
         {...props}
+        style={styles.inputText}
+        inputContainerStyle={{ borderBottomWidth: 0 }}
+      />
+    </View>
+  );
+};
+
+/*
+
+         <Theme.themedInput
+            placeholder="enter your height in feet"
+            keyboardType="number-pad"
+            numeric
+            value={heightFt}
+            onChangeText={(value: string) => handleHeightFt(value)}
+          ></Theme.themedInput>
+
+*/
+
+//TODO: validate
+//onChangeText={(value: string) => handleHeightFt(value)}
+
+const themedInputNumber = (props) => {
+  return (
+    <View style={styles.inputView}>
+      <Input
+        {...props}
+        keyboardType="number-pad"
+        numeric
         style={styles.inputText}
         inputContainerStyle={{ borderBottomWidth: 0 }}
       />
@@ -194,4 +241,6 @@ export const Theme = {
   themedPrimaryColor,
   themedClearButton,
   themedModal,
+  themedInputNumber,
+  themedItemButton,
 };
