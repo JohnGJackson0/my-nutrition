@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Theme } from "src/Theme";
 import { selectFoods, getFoodsAsync } from "./foodSearchSlice";
 import { setFoodAsync } from "./foodSlice";
 import { ActivityIndicator } from "react-native-paper";
-import { NavigationContainer } from "@react-navigation/native";
-
-//https://jsonplaceholder.typicode.com/posts/
-
-//TODO:
-// memoize
-// modal add
-// commit
 
 export function AddFood({ navigation }) {
   const foods = useSelector(selectFoods);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
-  React.useEffect(() => {
-    dispatch(getFoodsAsync(searchTerm));
-  }, [dispatch]);
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      dispatch(getFoodsAsync(searchTerm));
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
       backgroundColor: "#003f5c",
+      flex: 1,
+    },
+    item: {
+      padding: 1,
+      marginVertical: 1,
+      marginHorizontal: 1,
     },
     fab: {
       position: "absolute",
@@ -45,13 +46,14 @@ export function AddFood({ navigation }) {
       bottom: 0,
       zIndex: 100,
     },
-    item: {},
+    foods: {
+      height: "100%",
+    },
     title: {},
   });
 
   const handleChangeSearch = (term: string) => {
     setSearchTerm(term);
-    dispatch(getFoodsAsync(term));
   };
 
   const actionOnRow = (item) => {
@@ -60,18 +62,32 @@ export function AddFood({ navigation }) {
   };
 
   const Item = ({ item }) => (
-    <Theme.themedItemButton
-      title={item.foodName}
-      onPress={() => {
-        actionOnRow(item);
-      }}
-    >
-      <Text>{item.title}</Text>
-    </Theme.themedItemButton>
+    <View style={styles.item}>
+      <Theme.themedItemButton
+        title={(
+          item.foodName + brandInfo(item.foodBrand, item.foodOwner)
+        ).trimStart()}
+        onPress={() => {
+          actionOnRow(item);
+        }}
+      />
+    </View>
   );
 
   const renderItem = ({ item }) => {
     return <Item item={item} />;
+  };
+
+  const brandInfo = (foodBrand: string, foodOwner: string) => {
+    var result = "";
+
+    if (typeof foodBrand !== "undefined") {
+      result = "\n" + foodBrand;
+    } else if (typeof foodOwner !== "undefined") {
+      result = result + "\n" + foodOwner;
+    }
+
+    return result.toLowerCase();
   };
 
   return (
@@ -84,12 +100,17 @@ export function AddFood({ navigation }) {
 
       {foods.status == "loading" ? (
         <View style={styles.loadingIndicator}>
-          <ActivityIndicator color={"#000000"} size="large" />
+          <ActivityIndicator color={"white"} size="large" />
         </View>
       ) : (
-        <View></View>
+        <View style={styles.foods}>
+          <FlatList
+            data={foods.food}
+            renderItem={renderItem}
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: 5 }}
+          ></FlatList>
+        </View>
       )}
-      <FlatList data={foods.food} renderItem={renderItem}></FlatList>
     </View>
   );
 }

@@ -8,7 +8,7 @@ export interface FoodState {
 }
 
 const initialState: FoodState = {
-  food: new FoodData(new Food("", ""), []),
+  food: new FoodData("", "", []),
   status: "idle",
   error: "",
 };

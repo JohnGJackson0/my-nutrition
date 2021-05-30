@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { View, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { signUpAsync } from "./userSlice";
 import { selectLoggedInUser } from "./userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { Theme } from "src/Theme";
 
 export function Register({ navigation }) {
   const dispatch = useDispatch();
@@ -40,91 +40,44 @@ export function Register({ navigation }) {
     setLastName(lastName);
   };
 
-  const styles = StyleSheet.create({
-    registerButton: {
-      backgroundColor: "#fb5b5a",
-      borderRadius: 25,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 30,
-      marginBottom: 10,
-    },
-    inputView: {
-      backgroundColor: "#465881",
-      borderRadius: 25,
-      margin: 5,
-      height: 40,
-      width: "100%",
-    },
-    inputText: {
-      height: 40,
-      color: "white",
-    },
-    errorText: {
-      color: "red",
-      fontSize: 20,
-    },
-  });
+  const styles = StyleSheet.create({});
   return (
     <View>
-      <View style={styles.inputView}>
-        <Input
-          placeholder="First Name"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          value={firstName}
-          style={styles.inputText}
-          onChangeText={handleChangeFirstName}
-          onSubmitEditing={handleSubmit}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <Input
-          placeholder="Last Name"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          style={styles.inputText}
-          value={lastName}
-          onChangeText={handleChangeLastName}
-          onSubmitEditing={handleSubmit}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <Input
-          placeholder="Email"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          leftIcon={<Icon name="email-outline" size={24} color="grey" />}
-          value={email}
-          style={styles.inputText}
-          onChangeText={handleChangeEmail}
-          onSubmitEditing={handleSubmit}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <Input
-          placeholder="Password"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          secureTextEntry={true}
-          value={password}
-          style={styles.inputText}
-          onChangeText={handleChangePassword}
-          onSubmitEditing={handleSubmit}
-          leftIcon={<Icon name="lock-outline" size={24} color="grey" />}
-        />
-      </View>
-
-      <Button
-        title="Register"
-        type="clear"
-        titleStyle={{ color: "white" }}
-        style={styles.registerButton}
-        onPress={handleSubmit}
+      <Theme.themedInput
+        placeholder="First Name"
+        value={firstName}
+        onChangeText={handleChangeFirstName}
+        onSubmitEditing={handleSubmit}
+      />
+      <Theme.themedInput
+        placeholder="Last Name"
+        value={lastName}
+        onChangeText={handleChangeLastName}
+        onSubmitEditing={handleSubmit}
+      />
+      <Theme.themedInput
+        placeholder="Email"
+        leftIcon={<Icon name="email-outline" size={24} color="grey" />}
+        value={email}
+        onChangeText={handleChangeEmail}
+        onSubmitEditing={handleSubmit}
+      />
+      <Theme.themedInput
+        placeholder="Password"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={handleChangePassword}
+        onSubmitEditing={handleSubmit}
+        leftIcon={<Icon name="lock-outline" size={24} color="grey" />}
       />
 
+      <Theme.themedButtonRounded title="Register" onPress={handleSubmit} />
+
       {user.message ? (
-        <Text style={styles.errorText}>
+        <Theme.themedErrorText>
           {"\n"}
           {user.message}
-        </Text>
+        </Theme.themedErrorText>
       ) : (
         <View></View>
       )}

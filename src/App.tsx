@@ -18,7 +18,7 @@ const RootStack = createStackNavigator();
 
 function MainStackScreen() {
   return (
-    <MainStack.Navigator initialRouteName="AddItem">
+    <MainStack.Navigator initialRouteName="Splash">
       <MainStack.Screen
         options={{ headerShown: false }}
         name="Authentication"

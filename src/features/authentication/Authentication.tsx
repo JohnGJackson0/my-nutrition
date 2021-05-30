@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Button } from "react-native-elements";
 import { View, StyleSheet, Text } from "react-native";
 import { Register } from "./Register";
 import { Login } from "./Login";
 import { selectLoggedInUser } from "./userSlice";
-import { ActivityIndicator } from "react-native";
 import { useSelector } from "react-redux";
+import { Theme } from "src/Theme";
 
 export function Authentication({ navigation }) {
   const [isSignInActive, setIsSignActive] = useState<boolean>(true);
@@ -13,12 +12,10 @@ export function Authentication({ navigation }) {
 
   const onSignInPressed = () => {
     setIsSignActive(true);
-    //dispatch(signOut());
   };
 
   const onSignUpPressed = () => {
     setIsSignActive(false);
-    //dispatch(signOut());
   };
 
   const styles = StyleSheet.create({
@@ -29,27 +26,15 @@ export function Authentication({ navigation }) {
     },
     loginSelectionContainer: {
       flexDirection: "row",
-      marginBottom: 20,
+      marginBottom: "5%",
       marginTop: "5%",
+      width: "100%",
     },
     loginContainer: {
-      width: "80%",
-    },
-    loadingIndicator: {
-      justifyContent: "center",
-      alignItems: "center",
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      zIndex: 100,
+      width: "100%",
     },
     inactiveButton: {
       color: "#A9A9A9",
-    },
-    activeButton: {
-      color: "#FFFFFF",
     },
     logo: {
       fontWeight: "bold",
@@ -57,44 +42,61 @@ export function Authentication({ navigation }) {
       color: "#fb5b5a",
       marginTop: "20%",
     },
+    registerSelection: {
+      alignItems: "flex-end",
+      width: "50%",
+    },
+    signInSelection: {
+      alignItems: "flex-start",
+      width: "50%",
+    },
   });
   return (
     <View style={styles.container}>
       {user.status == "loading" ? (
-        <View style={styles.loadingIndicator}>
-          <ActivityIndicator color={"#000000"} size="large" />
-        </View>
+        <Theme.themedLoadingIndicator />
       ) : (
-        <View></View>
-      )}
-      <Text style={styles.logo}>My Nutrition</Text>
-      <View style={styles.loginSelectionContainer}>
-        <Button
-          title="Register"
-          type="clear"
-          titleStyle={
-            isSignInActive ? styles.inactiveButton : styles.activeButton
+        <View>
+          <Text style={styles.logo}>My Nutrition</Text>
+          <View style={styles.loginSelectionContainer}>
+            <View style={styles.registerSelection}>
+              {isSignInActive ? (
+                <Theme.inactiveButtonNoOutline
+                  title="Register"
+                  onPress={onSignUpPressed}
+                ></Theme.inactiveButtonNoOutline>
+              ) : (
+                <Theme.themedClearButtonNoOutline
+                  title="Register"
+                  onPress={onSignUpPressed}
+                ></Theme.themedClearButtonNoOutline>
+              )}
+            </View>
+            <View style={styles.signInSelection}>
+              {isSignInActive ? (
+                <Theme.themedClearButtonNoOutline
+                  title="Login"
+                  onPress={onSignInPressed}
+                ></Theme.themedClearButtonNoOutline>
+              ) : (
+                <Theme.inactiveButtonNoOutline
+                  title="Login"
+                  onPress={onSignInPressed}
+                ></Theme.inactiveButtonNoOutline>
+              )}
+            </View>
+          </View>
+          {
+            <View style={styles.loginContainer}>
+              {isSignInActive ? (
+                <Login navigation={navigation} />
+              ) : (
+                <Register navigation={navigation} />
+              )}
+            </View>
           }
-          onPress={onSignUpPressed}
-        ></Button>
-        <Button
-          title="Sign In"
-          type="clear"
-          titleStyle={[
-            isSignInActive ? styles.activeButton : styles.inactiveButton,
-          ]}
-          onPress={onSignInPressed}
-        ></Button>
-      </View>
-      {
-        <View style={styles.loginContainer}>
-          {isSignInActive ? (
-            <Login navigation={navigation} />
-          ) : (
-            <Register navigation={navigation} />
-          )}
         </View>
-      }
+      )}
     </View>
   );
 }

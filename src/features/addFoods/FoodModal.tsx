@@ -52,74 +52,68 @@ export function FoodModal({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {console.log("food ", food)}
       {food.status == "loading" ? (
         <View style={styles.loadingIndicator}>
-          <ActivityIndicator color={"#000000"} size="large" />
+          <ActivityIndicator color={"white"} size="large" />
         </View>
       ) : (
-        <View></View>
+        <View style={styles.container}>
+          <Theme.themedText>I ate a</Theme.themedText>
+          <View
+            style={{
+              width: "80%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <DropDownPicker
+              style={{ zIndex: 5 }}
+              textStyle={{
+                fontSize: 35,
+              }}
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              listMode="SCROLLVIEW"
+              itemSeparator={true}
+              theme="DARK"
+              activityIndicatorSize={90}
+              rtl={true}
+            />
+          </View>
+          <Theme.themedText> of a </Theme.themedText>
+          <Theme.themedCoolText>{food.food.foodName}</Theme.themedCoolText>
+          <Theme.themedText> today. {"\n\n"}</Theme.themedText>
+          <Theme.themedText>This many times </Theme.themedText>
+          <Theme.themedInputNumber
+            placeholder="enter the quantity of servings"
+            value={qty}
+            onChangeText={(value: number) => handleQty(value)}
+          ></Theme.themedInputNumber>
+          <Theme.themedText>
+            Which amounts to the following amount of calories,
+          </Theme.themedText>
+          <Theme.themedCoolText>
+            {Math.round(value * qty)}.
+          </Theme.themedCoolText>
+          <View style={styles.buttonGroupContainer}>
+            <View style={styles.buttonContainer}>
+              <Theme.themedButtonRounded
+                onPress={() => navigation.goBack()}
+                title="Eat"
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Theme.themedClearButton
+                onPress={() => navigation.goBack()}
+                title="Dismiss"
+              />
+            </View>
+          </View>
+        </View>
       )}
-      <Theme.themedText>I ate a </Theme.themedText>
-      <View
-        style={{
-          width: "80%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <DropDownPicker
-          style={{ zIndex: 5 }}
-          listParentContainerStyle={{
-            height: 40,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          textStyle={{
-            fontSize: 35,
-          }}
-          min={10}
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          listMode="SCROLLVIEW"
-          itemSeparator={true}
-          placeholder="Select a serving size"
-          theme="DARK"
-          activityIndicatorSize={90}
-          rtl={true}
-        />
-      </View>
-      <Theme.themedText> of a </Theme.themedText>
-      <Theme.themedCoolText>{food.food.foodName}</Theme.themedCoolText>
-      <Theme.themedText> today. {"\n\n"}</Theme.themedText>
-      <Theme.themedText>This many times </Theme.themedText>
-      <Theme.themedInputNumber
-        placeholder="enter the quantity of servings"
-        value={qty}
-        onChangeText={(value: number) => handleQty(value)}
-      ></Theme.themedInputNumber>
-
-      <Theme.themedText>
-        Which amounts to the following amount of calories,
-      </Theme.themedText>
-      <Theme.themedCoolText>{value * qty}.</Theme.themedCoolText>
-      <View style={styles.buttonGroupContainer}>
-        <View style={styles.buttonContainer}>
-          <Theme.themedButtonRounded
-            onPress={() => navigation.goBack()}
-            title="Eat"
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Theme.themedClearButton
-            onPress={() => navigation.goBack()}
-            title="Dismiss"
-          />
-        </View>
-      </View>
     </View>
   );
 }

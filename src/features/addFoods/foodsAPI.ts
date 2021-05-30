@@ -8,10 +8,19 @@ const base = {
 export class Food {
   foodName: string;
   foodId: string;
+  foodBrand: string;
+  foodOwner: string;
 
-  constructor(foodName: string, foodId: string) {
+  constructor(
+    foodName: string,
+    foodId: string,
+    foodBrand: string,
+    foodOwner: string
+  ) {
     this.foodName = foodName;
     this.foodId = foodId;
+    this.foodBrand = foodBrand;
+    this.foodOwner = foodOwner;
   }
 }
 
@@ -20,6 +29,9 @@ export class Food {
 
 export async function getFoods(search: string): Promise<Array<Food>> {
   return new Promise((resolve, reject) => {
+    if (search.trim() == "") {
+      reject("Enter search");
+    }
     Axios.get(
       base.url +
         "/foods/search?query=" +
@@ -30,18 +42,27 @@ export async function getFoods(search: string): Promise<Array<Food>> {
         base.key
     )
       .then((response) => {
+        console.log("response ", response);
         const len: number = response.data.foods.length;
         const result = [];
 
         for (var i: number = 0; i < len; i++) {
           result.push(
             new Food(
-              response.data.foods[i].description,
-              response.data.foods[i].fdcId
+              typeof response.data.foods[i].additionalDescriptions !==
+                "undefined" &&
+              response.data.foods[i].additionalDescriptions.trim() !== ""
+                ? response.data.foods[i].additionalDescriptions +
+                  " - " +
+                  response.data.foods[i].lowercaseDescription
+                : response.data.foods[i].lowercaseDescription,
+              response.data.foods[i].fdcId,
+              response.data.foods[i].brandName,
+              response.data.foods[i].brandOwner
             )
           );
         }
-
+        console.log("result ", result);
         return resolve(result);
       })
       .catch((error) => {
@@ -55,11 +76,18 @@ export interface servings {
   servingSizeInGram: number;
 }
 
-export class FoodData extends Food {
+export class FoodData {
   caloriesPerServing: Array<caloriesPerServing>;
+  foodName: string;
+  foodId: string;
 
-  constructor(food: Food, caloriesPerServing: Array<caloriesPerServing>) {
-    super(food.foodName, food.foodId);
+  constructor(
+    foodName: string,
+    foodId: string,
+    caloriesPerServing: Array<caloriesPerServing>
+  ) {
+    this.foodName = foodName;
+    this.foodId = foodId;
     this.caloriesPerServing = caloriesPerServing;
   }
 }
@@ -81,6 +109,7 @@ export async function getFood(apiId: string): Promise<FoodData> {
         const servingSizes = response.data.foodPortions;
         const caloriesPer100Grams = response.data.foodNutrients[2].amount;
         const description = response.data.description;
+
         const caloriesPerGram = caloriesPer100Grams / 100;
 
         var servingCalories = [];
@@ -96,11 +125,11 @@ export async function getFood(apiId: string): Promise<FoodData> {
         }
 
         servingCalories.push({
-          label: "Per 100 grams ",
+          label: "Per 100 grams",
           value: caloriesPer100Grams,
         });
 
-        resolve(new FoodData(new Food(description, apiId), servingCalories));
+        resolve(new FoodData(description, apiId, servingCalories));
       })
       .catch((error) => {
         reject(error);

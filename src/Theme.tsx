@@ -1,16 +1,28 @@
 import React from "react";
 import { Button, Input, Text, Overlay } from "react-native-elements";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import Modal from "modal-react-native-web";
-import DropDownPicker from "react-native-dropdown-picker";
+import { ActivityIndicator } from "react-native";
 
 const styles = StyleSheet.create({
   themedButtonRounded: {
     backgroundColor: "#fb5b5a",
     borderRadius: 25,
     height: 50,
+    margin: 5,
+    marginTop: 8,
     alignItems: "center",
     justifyContent: "center",
+  },
+  loadingIndicator: {
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 100,
   },
   themedText: {
     margin: 5,
@@ -26,7 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#465881",
     borderRadius: 25,
     height: 40,
-    margin: 10,
+    margin: 5,
   },
   inputText: {
     height: 40,
@@ -47,13 +59,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderWidth: 0.8,
   },
-  themedItemButton: {
+  themedClearButtonNoOutline: {
     height: 50,
-    margin: 5,
-    borderColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 0.8,
+  },
+  themedItemButton: {
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
   },
   inactiveButtonTitle: {
     color: "black",
@@ -72,11 +83,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "stretch",
   },
+  seperatorView: {
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+  },
   modalContainer: {},
   modal: {},
   errorText: {
     color: "red",
     fontSize: 20,
+  },
+  inactiveButtonNoOutline: {
+    color: "#A9A9A9",
   },
 });
 
@@ -142,6 +160,14 @@ const themedButton = (props) => {
   );
 };
 
+const themedLoadingIndicator = (props) => {
+  return (
+    <View style={styles.loadingIndicator}>
+      <ActivityIndicator color={"white"} size="large" />
+    </View>
+  );
+};
+
 const themedClearButton = (props) => {
   return (
     <Button
@@ -153,14 +179,43 @@ const themedClearButton = (props) => {
   );
 };
 
-const themedItemButton = (props) => {
+const themedClearButtonNoOutline = (props) => {
   return (
+    <Button
+      titleStyle={{ color: "white" }}
+      style={styles.themedClearButtonNoOutline}
+      type="clear"
+      {...props}
+    />
+  );
+};
+
+const inactiveButtonNoOutline = (props) => {
+  return (
+    <Button
+      titleStyle={{ color: "#A9A9A9" }}
+      style={styles.inactiveButtonNoOutline}
+      type="clear"
+      {...props}
+    />
+  );
+};
+
+/*
+
     <Button
       type="clear"
       titleStyle={{ color: "white" }}
       style={styles.themedItemButton}
+      buttonStyle={{ justifyContent: "flex-start" }}
       {...props}
-    />
+    />*/
+
+const themedItemButton = (props) => {
+  return (
+    <TouchableOpacity style={styles.themedItemButton} {...props}>
+      <Theme.themedText>{props.title}</Theme.themedText>
+    </TouchableOpacity>
   );
 };
 
@@ -187,17 +242,9 @@ const themedInput = (props) => {
   );
 };
 
-/*
-
-         <Theme.themedInput
-            placeholder="enter your height in feet"
-            keyboardType="number-pad"
-            numeric
-            value={heightFt}
-            onChangeText={(value: string) => handleHeightFt(value)}
-          ></Theme.themedInput>
-
-*/
+const themedSeperator = () => {
+  return <View style={styles.seperatorView}> </View>;
+};
 
 //TODO: validate
 //onChangeText={(value: string) => handleHeightFt(value)}
@@ -243,4 +290,8 @@ export const Theme = {
   themedModal,
   themedInputNumber,
   themedItemButton,
+  themedSeperator,
+  themedLoadingIndicator,
+  themedClearButtonNoOutline,
+  inactiveButtonNoOutline
 };

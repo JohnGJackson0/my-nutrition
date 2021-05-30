@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { View, Text, StyleSheet } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { View, StyleSheet } from "react-native";
 import { SignInAsync } from "./userSlice";
 import { selectLoggedInUser } from "./userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { Theme } from "src/Theme";
 
 export function Login({ navigation }) {
   const dispatch = useDispatch();
@@ -29,96 +29,35 @@ export function Login({ navigation }) {
     setPassword(password);
   };
 
-  const styles = StyleSheet.create({
-    loginButton: {
-      backgroundColor: "#fb5b5a",
-      borderRadius: 25,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 30,
-      marginBottom: 10,
-    },
-    inputView: {
-      backgroundColor: "#465881",
-      borderRadius: 25,
-      margin: 5,
-      height: 40,
-      width: "100%",
-    },
-    inputViewOld: {
-      backgroundColor: "#465881",
-      borderRadius: 25,
-      margin: 5,
-      height: 40,
-      justifyContent: "center",
-      padding: 5,
-      paddingTop: 15,
-      width: "100%",
-    },
-    buttonView: {
-      width: "100%",
-    },
-    inputText: {
-      height: 40,
-      color: "white",
-    },
-    reset: {
-      color: "white",
-      fontSize: 11,
-    },
-    errorText: {
-      color: "red",
-      fontSize: 20,
-    },
-  });
+  const styles = StyleSheet.create({});
 
   return (
     <View>
-      <View style={styles.inputView}>
-        <Input
-          placeholder="Email"
-          value={email}
-          style={styles.inputText}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          onChangeText={handleChangeEmail}
-          leftIcon={<Icon name="email-outline" size={24} color="grey" />}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <Input
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          placeholder="Password"
-          secureTextEntry
-          style={styles.inputText}
-          value={password}
-          onChangeText={handleChangePassword}
-          leftIcon={<Icon name="lock-outline" size={24} color="grey" />}
-        />
-      </View>
-      <View style={styles.buttonView}>
-        <Button
-          onPress={onSubmit}
-          title="Sign In"
-          type="clear"
-          titleStyle={{ color: "white" }}
-          style={styles.loginButton}
-        />
-      </View>
+      <Theme.themedInput
+        placeholder="Email"
+        value={email}
+        onChangeText={handleChangeEmail}
+        leftIcon={<Icon name="email-outline" size={24} color="grey" />}
+      />
+      <Theme.themedInput
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={handleChangePassword}
+        leftIcon={<Icon name="lock-outline" size={24} color="grey" />}
+      />
+      <Theme.themedButtonRounded onPress={onSubmit} title="Sign In" />
       <View>
-        <Text
-          onPress={() => navigation.navigate("ResetPassword")}
-          style={styles.reset}
-        >
+        <Theme.themedText onPress={() => navigation.navigate("ResetPassword")}>
           {"\n"}Forgot Password?
-        </Text>
+        </Theme.themedText>
       </View>
 
       {user.message ? (
-        <Text style={styles.errorText}>
+        <Theme.themedErrorText>
           {"\n"}
           {user.message}
-        </Text>
+        </Theme.themedErrorText>
       ) : (
         <View></View>
       )}
