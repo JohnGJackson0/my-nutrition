@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedInUser, signOut } from "./userSlice";
-import { Button, Input } from "react-native-elements";
+import { Button } from "react-native-elements";
 import { Text, View } from "react-native";
 import {
   selectUserInfo,

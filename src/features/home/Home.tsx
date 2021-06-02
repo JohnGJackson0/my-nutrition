@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Theme } from "src/Theme";
 import {
   selectUserInfo,
   getGoalAsync,
 } from "../userSurvey/questions/UserInfoSlice";
-import { FAB } from "react-native-paper";
 
 export function Home({ navigation }) {
   const dispatch = useDispatch();
@@ -15,6 +14,7 @@ export function Home({ navigation }) {
   }, []);
 
   const userInfo = useSelector(selectUserInfo);
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -27,12 +27,32 @@ export function Home({ navigation }) {
       bottom: 0,
       backgroundColor: "#fb5b5a",
     },
+    goalButton: {
+      margin: 10,
+    },
+    homeContainer: {
+      alignItems: "center",
+    },
   });
 
   //TODO: consumed/remaining fats/carbs/protiens calories
   return (
     <View style={styles.container}>
-      <Theme.themedText>Welcome to the home screen. </Theme.themedText>
+      {console.log(userInfo)}
+      {userInfo.calorieGoal == null ? (
+        <View>
+          <Theme.themedButtonRounded
+            styles={styles.goalButton}
+            onPress={() => navigation.navigate("Survey")}
+            title="Let's set a goal"
+          ></Theme.themedButtonRounded>
+        </View>
+      ) : (
+        <View style={styles.homeContainer}>
+          <Theme.themedText> My calorie goal </Theme.themedText>
+          <Theme.themedCoolText> {userInfo.calorieGoal} </Theme.themedCoolText>
+        </View>
+      )}
     </View>
   );
 }

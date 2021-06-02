@@ -29,8 +29,6 @@ export function Login({ navigation }) {
     setPassword(password);
   };
 
-  const styles = StyleSheet.create({});
-
   return (
     <View>
       <Theme.themedInput

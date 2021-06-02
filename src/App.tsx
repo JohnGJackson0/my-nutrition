@@ -12,11 +12,18 @@ import { Survey } from "./features/userSurvey/Survey";
 import { CalorieGoal } from "./features/userSurvey/goals/calorieGoal/CalorieGoal";
 import { AddFood } from "./features/addFoods/AddFood";
 import { FoodModal } from "./features/addFoods/FoodModal";
+import { Settings } from "./features/settings/Settings";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import {
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "react-native-vector-icons";
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
-function MainStackScreen() {
+export function MainStackScreen() {
   return (
     <MainStack.Navigator initialRouteName="Splash">
       <MainStack.Screen
@@ -24,6 +31,7 @@ function MainStackScreen() {
         name="Authentication"
         component={Authentication}
       ></MainStack.Screen>
+      <MainStack.Screen name="Settings" component={Settings}></MainStack.Screen>
       <MainStack.Screen
         options={{ headerShown: false }}
         name="CalorieGoal"
@@ -42,7 +50,7 @@ function MainStackScreen() {
       <MainStack.Screen name="User" component={User}></MainStack.Screen>
       <MainStack.Screen
         name="Home"
-        component={Home}
+        component={HomeTabs}
         options={{
           headerStyle: {
             backgroundColor: "#003f5c",
@@ -76,7 +84,7 @@ function MainStackScreen() {
   );
 }
 
-function RootStackScreen() {
+export function RootStackScreen() {
   return (
     <RootStack.Navigator mode="modal">
       <RootStack.Screen
@@ -90,6 +98,48 @@ function RootStackScreen() {
         options={{ headerShown: false }}
       />
     </RootStack.Navigator>
+  );
+}
+
+function HomeTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      activeColor="#3e2465"
+      inactiveColor="#f0edf6"
+      barStyle={{ backgroundColor: "#fff" }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Eat"
+        component={AddFood}
+        options={{
+          tabBarLabel: "Eat",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="food-apple" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          tabBarLabel: "Settings",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="settings" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
