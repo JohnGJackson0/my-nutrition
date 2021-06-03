@@ -1,7 +1,7 @@
 import { db } from "../authentication/firebaseConfig";
 
+//user.user.uid
 export async function submitCalorieGoal(goal: number): Promise<number> {
-  console.log("submit calorie goal ", goal);
   return new Promise((resolve, reject) => {
     const userId = db.app.auth().currentUser.uid;
     db.app
@@ -12,7 +12,6 @@ export async function submitCalorieGoal(goal: number): Promise<number> {
         calorieGoal: goal,
       })
       .then(() => {
-        console.log("The user id is ", userId);
         resolve(goal);
       })
       .catch((error) => {
@@ -21,12 +20,11 @@ export async function submitCalorieGoal(goal: number): Promise<number> {
   });
 }
 
-export async function getCalorieGoal(): Promise<number> {
+export async function getCalorieGoal(uid: string): Promise<number> {
   return new Promise((resolve, reject) => {
-    const userId = db.app.auth().currentUser.uid;
     db.app
       .database()
-      .ref("userStore/" + userId)
+      .ref("userStore/" + uid)
       .get()
       .then((snapshot) => {
         resolve(snapshot.val().calorieGoal);

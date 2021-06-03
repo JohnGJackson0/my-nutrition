@@ -2,6 +2,7 @@ export class User {
   firstName: string;
   lastName: string;
   email: string;
+  uid: string;
 
   // TODO:
   //It's difficult to have nested entities due to redux-persist
@@ -9,7 +10,7 @@ export class User {
   //we also need to change this away from class based
   //components due to redux toolkit
 
-  constructor(firstName: string, lastName: string, email: string) {
+  constructor(firstName: string, lastName: string, email: string, uid: string) {
     if (isEmptyOrNull(firstName) || isEmptyOrNull(lastName)) {
       throw new Error("You must fill first name and last name");
     }
@@ -22,6 +23,7 @@ export class User {
 
     this.firstName = firstName.toLocaleLowerCase();
     this.lastName = lastName.toLocaleLowerCase();
+    this.uid = uid;
   }
 
   get name(): string {

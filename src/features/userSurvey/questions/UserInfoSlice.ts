@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { submitCalorieGoal } from "../AccountStorageAPI";
+import { submitCalorieGoal, getCalorieGoal } from "../AccountStorageAPI";
 
 export interface UserInfoState {
   isMale: boolean;
@@ -41,9 +41,9 @@ export const submitGoalAsync = createAsyncThunk(
 
 export const getGoalAsync = createAsyncThunk(
   "userInfo/getGoal",
-  async (undefined, { rejectWithValue }) => {
+  async (uid: string, { rejectWithValue }) => {
     try {
-      const response = await getGoalAsync().catch((error) => {
+      const response = await getCalorieGoal(uid).catch((error) => {
         return rejectWithValue(error.message);
       });
       return response;
@@ -103,6 +103,7 @@ const userInfoSlice = createSlice({
         state.calorieGoalError = action.payload as string;
       })
       .addCase(getGoalAsync.fulfilled, (state, action) => {
+        console.log("The goal ", action.payload);
         state.calorieGoal = action.payload;
         if (action.payload > 0) {
           state.calorieGoalError = "";

@@ -30,7 +30,8 @@ export async function signInUser(credential: Credential): Promise<User> {
             const user = new User(
               snapshot.val().firstName,
               snapshot.val().lastName,
-              snapshot.val().email
+              snapshot.val().email,
+              uid
             );
             resolve(user);
           })

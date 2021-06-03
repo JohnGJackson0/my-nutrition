@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { selectLoggedInUser, signOut } from "../authentication/userSlice";
 import { Theme } from "src/Theme";
 import {
   selectUserInfo,
@@ -8,12 +9,20 @@ import {
 } from "../userSurvey/questions/UserInfoSlice";
 
 export function Home({ navigation }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getGoalAsync);
-  }, []);
-
   const userInfo = useSelector(selectUserInfo);
+  const [calorieGoal, setCalorieGoal] = useState(
+    useSelector(selectUserInfo).calorieGoal
+  );
+  const user = useSelector(selectLoggedInUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCalorieGoal(userInfo.calorieGoal);
+  }, [userInfo]);
+
+  useEffect(() => {
+    dispatch(getGoalAsync(user.user.uid));
+  }, []);
 
   const styles = StyleSheet.create({
     container: {
@@ -38,8 +47,7 @@ export function Home({ navigation }) {
   //TODO: consumed/remaining fats/carbs/protiens calories
   return (
     <View style={styles.container}>
-      {console.log(userInfo)}
-      {userInfo.calorieGoal == null ? (
+      {calorieGoal == null ? (
         <View>
           <Theme.themedButtonRounded
             styles={styles.goalButton}
@@ -50,7 +58,7 @@ export function Home({ navigation }) {
       ) : (
         <View style={styles.homeContainer}>
           <Theme.themedText> My calorie goal </Theme.themedText>
-          <Theme.themedCoolText> {userInfo.calorieGoal} </Theme.themedCoolText>
+          <Theme.themedCoolText> {calorieGoal} </Theme.themedCoolText>
         </View>
       )}
     </View>

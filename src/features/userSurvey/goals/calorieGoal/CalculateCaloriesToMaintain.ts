@@ -81,7 +81,6 @@ export function getDailyCaloriesMetric(
 ) {
   console.log("isMale ", isMale);
   if (isMale === true) {
-    console.log("getDailyCaloriesMetric called male");
     return Math.ceil(
       _getCaloriesNeedsMetric(
         activityMultiplier,
@@ -89,7 +88,6 @@ export function getDailyCaloriesMetric(
       )
     );
   } else {
-    console.log("getDailyCaloriesMetric called female");
     return Math.ceil(
       _getCaloriesNeedsMetric(
         activityMultiplier,
@@ -146,20 +144,6 @@ function _getMaleBMRMetric(
   heightInCm: number,
   ageInYears: number
 ) {
-  console.log("_getMaleBMRMetric called");
-  console.log(
-    "weight ",
-    weightInKg,
-    " heightInCm ",
-    heightInCm,
-    " ageInYears ",
-    ageInYears
-  );
-
-  console.log(
-    "return ",
-    66 + 13.7 * weightInKg + 5 * heightInCm - 6.8 * ageInYears
-  );
   return 66 + 13.7 * weightInKg + 5 * heightInCm - 6.8 * ageInYears;
 }
 
