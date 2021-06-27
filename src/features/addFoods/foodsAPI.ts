@@ -24,9 +24,6 @@ export class Food {
   }
 }
 
-//our api key
-//https://api.nal.usda.gov/fdc/v1/foods/search?query=apple&pageSize=2&api_key=Z8Ei3WuCifNrjYMkqdi2omkag0QuXlp6HRs91VrL
-
 export async function getFoods(search: string): Promise<Array<Food>> {
   return new Promise((resolve, reject) => {
     if (search.trim() == "") {
@@ -42,7 +39,6 @@ export async function getFoods(search: string): Promise<Array<Food>> {
         base.key
     )
       .then((response) => {
-        console.log("response ", response);
         const len: number = response.data.foods.length;
         const result = [];
 
@@ -62,7 +58,6 @@ export async function getFoods(search: string): Promise<Array<Food>> {
             )
           );
         }
-        console.log("result ", result);
         return resolve(result);
       })
       .catch((error) => {
@@ -114,8 +109,11 @@ export async function getFood(apiId: string): Promise<FoodData> {
 
         var servingCalories = [];
 
+        console.log("serving sizes", servingSizes);
         for (var i: number = 0; i < servingSizes.length; i++) {
-          const label = servingSizes[i].portionDescription as string;
+          const label =
+            (servingSizes[i].portionDescription as string) ||
+            (servingSizes[i].modifier as string);
           const value = Math.round(
             servingSizes[i].gramWeight * caloriesPerGram
           );

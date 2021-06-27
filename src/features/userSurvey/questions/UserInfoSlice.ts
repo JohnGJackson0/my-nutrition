@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { submitCalorieGoal, getCalorieGoal } from "../AccountStorageAPI";
+import { submitCalorieGoal, getCalorieGoal } from "../../AccountAPI";
 
 export interface UserInfoState {
   isMale: boolean;

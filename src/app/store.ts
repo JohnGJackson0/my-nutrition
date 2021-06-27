@@ -10,6 +10,7 @@ import userInfoUsReducer from "../features/userSurvey/questions/UserInfoInUSSlic
 import userInfoReducer from "../features/userSurvey/questions/UserInfoSlice";
 import foodsSearchReducer from "../features/addFoods/foodSearchSlice";
 import foodReducer from "../features/addFoods/foodSlice";
+import foodsLoggedReducer from "src/features/calorieLog/FoodsLogSlice";
 
 const reducers = combineReducers({
   user: userReducer,
@@ -20,6 +21,7 @@ const reducers = combineReducers({
   userInfo: userInfoReducer,
   foods: foodsSearchReducer,
   food: foodReducer,
+  foodLog: foodsLoggedReducer,
 });
 
 const persistConfig = {

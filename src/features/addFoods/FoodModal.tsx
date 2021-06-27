@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Theme } from "src/Theme";
 import { selectFood } from "./foodSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import DropDownPicker from "react-native-dropdown-picker";
 import { ActivityIndicator } from "react-native-paper";
+import { FoodData } from "./foodsAPI";
+import { logFoodAsync } from "./FoodLogSlice";
+import { FoodLogState } from "../AccountAPI";
 
 export function FoodModal({ navigation }) {
+  const dispatch = useDispatch();
   const food = useSelector(selectFood);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -48,6 +52,26 @@ export function FoodModal({ navigation }) {
 
   const handleQty = (QtyInput: number) => {
     setQty(QtyInput);
+  };
+
+  const logFood = (
+    foodToLog: FoodData,
+    quantityToLog: number,
+    caloriesToLog: number
+  ) => {
+    const food: FoodLogState = {
+      food: foodToLog,
+      quantity: quantityToLog,
+      calories: caloriesToLog,
+      status: "idle",
+      error: "",
+    };
+    dispatch(logFoodAsync(food));
+  };
+
+  const onEatClicked = () => {
+    logFood(food.food, qty, Math.round(value * qty));
+    navigation.goBack();
   };
 
   return (
@@ -100,10 +124,7 @@ export function FoodModal({ navigation }) {
           </Theme.themedCoolText>
           <View style={styles.buttonGroupContainer}>
             <View style={styles.buttonContainer}>
-              <Theme.themedButtonRounded
-                onPress={() => navigation.goBack()}
-                title="Eat"
-              />
+              <Theme.themedButtonRounded onPress={onEatClicked} title="Eat" />
             </View>
             <View style={styles.buttonContainer}>
               <Theme.themedClearButton
