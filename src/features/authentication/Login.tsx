@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { SignInAsync } from "./userSlice";
 import { selectLoggedInUser } from "./userSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -35,14 +34,12 @@ export function Login({ navigation }) {
         placeholder="Email"
         value={email}
         onChangeText={handleChangeEmail}
-        leftIcon={<Icon name="email-outline" size={24} color="grey" />}
       />
       <Theme.themedInput
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={handleChangePassword}
-        leftIcon={<Icon name="lock-outline" size={24} color="grey" />}
       />
       <Theme.themedButtonRounded onPress={onSubmit} title="Sign In" />
       <View>

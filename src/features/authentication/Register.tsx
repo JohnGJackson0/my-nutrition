@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { View } from "react-native";
 import { signUpAsync } from "./userSlice";
 import { selectLoggedInUser } from "./userSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -40,7 +39,6 @@ export function Register({ navigation }) {
     setLastName(lastName);
   };
 
-  const styles = StyleSheet.create({});
   return (
     <View>
       <Theme.themedInput
@@ -57,7 +55,6 @@ export function Register({ navigation }) {
       />
       <Theme.themedInput
         placeholder="Email"
-        leftIcon={<Icon name="email-outline" size={24} color="grey" />}
         value={email}
         onChangeText={handleChangeEmail}
         onSubmitEditing={handleSubmit}
@@ -68,7 +65,6 @@ export function Register({ navigation }) {
         value={password}
         onChangeText={handleChangePassword}
         onSubmitEditing={handleSubmit}
-        leftIcon={<Icon name="lock-outline" size={24} color="grey" />}
       />
 
       <Theme.themedButtonRounded title="Register" onPress={handleSubmit} />

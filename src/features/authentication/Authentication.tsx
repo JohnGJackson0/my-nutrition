@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Register } from "./Register";
 import { Login } from "./Login";
 import { selectLoggedInUser } from "./userSlice";
@@ -19,28 +19,11 @@ export function Authentication({ navigation }) {
   };
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: "center",
-      backgroundColor: "#003f5c",
-    },
     loginSelectionContainer: {
       flexDirection: "row",
       marginBottom: "5%",
       marginTop: "5%",
       width: "100%",
-    },
-    loginContainer: {
-      width: "100%",
-    },
-    inactiveButton: {
-      color: "#A9A9A9",
-    },
-    logo: {
-      fontWeight: "bold",
-      fontSize: 50,
-      color: "#fb5b5a",
-      marginTop: "20%",
     },
     registerSelection: {
       alignItems: "flex-end",
@@ -52,12 +35,12 @@ export function Authentication({ navigation }) {
     },
   });
   return (
-    <View style={styles.container}>
+    <Theme.themedBackgroundContainer>
       {user.status == "loading" ? (
         <Theme.themedLoadingIndicator />
       ) : (
         <View>
-          <Text style={styles.logo}>My Nutrition</Text>
+          <Theme.themedLogo />
           <View style={styles.loginSelectionContainer}>
             <View style={styles.registerSelection}>
               {isSignInActive ? (
@@ -87,7 +70,7 @@ export function Authentication({ navigation }) {
             </View>
           </View>
           {
-            <View style={styles.loginContainer}>
+            <View>
               {isSignInActive ? (
                 <Login navigation={navigation} />
               ) : (
@@ -97,6 +80,6 @@ export function Authentication({ navigation }) {
           }
         </View>
       )}
-    </View>
+    </Theme.themedBackgroundContainer>
   );
 }

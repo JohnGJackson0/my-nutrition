@@ -92,11 +92,40 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     fontSize: 20,
+    margin: 5,
   },
   inactiveButtonNoOutline: {
     color: "#A9A9A9",
   },
+  logo: {
+    alignItems: "center",
+    fontWeight: "bold",
+    fontSize: 50,
+    color: "#fb5b5a",
+    marginTop: "15%",
+  },
+  logoContainer: {
+    alignItems: "center",
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#003f5c",
+  },
 });
+
+const themedBackgroundContainer = (props) => {
+  return <View style={styles.container} {...props}></View>;
+};
+
+const themedLogo = (props) => {
+  return (
+    <View style={styles.logoContainer}>
+      <Text style={styles.logo} {...props}>
+        My Nutrition
+      </Text>
+    </View>
+  );
+};
 
 //using overlay to help support web
 const themedModal = (props) => {
@@ -201,16 +230,6 @@ const inactiveButtonNoOutline = (props) => {
   );
 };
 
-/*
-
-    <Button
-      type="clear"
-      titleStyle={{ color: "white" }}
-      style={styles.themedItemButton}
-      buttonStyle={{ justifyContent: "flex-start" }}
-      {...props}
-    />*/
-
 const themedItemButton = (props) => {
   return (
     <TouchableOpacity style={styles.themedItemButton} {...props}>
@@ -293,5 +312,7 @@ export const Theme = {
   themedSeperator,
   themedLoadingIndicator,
   themedClearButtonNoOutline,
-  inactiveButtonNoOutline
+  inactiveButtonNoOutline,
+  themedLogo,
+  themedBackgroundContainer,
 };
